@@ -1,5 +1,7 @@
 # Wizard Domains
-An example AI Domain Name Generator Powered by GPT-3.
+An example AI domain name gGenerator powered by GPT-3
+
+![Animation](https://user-images.githubusercontent.com/23462440/216789372-837b7564-55b8-42d2-bbed-24ae44dd49b4.gif)
 
 > Generate the perfect domain name for your website using OpenAI's GPT-3 technology with Wizard Domains. Get instant suggestions and find the perfect name for your brand.
 
