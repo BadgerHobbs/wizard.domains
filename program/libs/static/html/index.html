@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Wizard Domains - AI Domain Name Generator Powered by GPT-3</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Generate the perfect domain name for your website using OpenAI's GPT-3 technology
+    with Wizard Domains. Get instant suggestions and find the perfect name for your brand.">
+  <meta name="keywords" content="domain name, generator, AI, GPT-3, OpenAI, website, branding">
+  <meta name="author" content="Wizard Domains">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="/static/media/favicon.png">
+
+  <link rel="stylesheet" href="https://unpkg.com/@appwrite.io/pink" />
+  <!-- optionally, add icons -->
+  <link rel="stylesheet" href="https://unpkg.com/@appwrite.io/pink-icons" />
+
+  <style>
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      75% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+
+
+</head>
+
+<body class="theme-dark u-max-width-500"
+  style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: auto;">
+
+  <div style="text-align: center; margin-top: 10vh;">
+    <h1 class="heading-level-1" style="display: flex; align-items: center;">
+      Wizard
+      <img src="/static/media/favicon.png" style="height: 2.5rem; padding-inline: 0.5rem">
+      Domains
+    </h1>
+
+    <p>AI Domain Name Generator Powered by <a class="link" href="https://openai.com/api/">GPT-3</a></p>
+
+  </div>
+
+
+  <div class="card u-margin-block-start-40">
+
+    <form class="form u-width-full-line">
+      <ul class="form-list">
+        <li class="form-item">
+          <label class="label">Provide a short company description, and the AI will work it's magic!</label>
+          <div class="input-text-wrapper">
+            <textarea class="" id="prompt-text-area" placeholder="placeholder text"
+              style="word-wrap: break-word; padding-inline-end: 4rem; height: 6rem; width: 30rem;" rows="6"></textarea>
+            <span class="text-counter">
+              <span class="text-counter-count" id="prompt-text-counter">0</span>
+              <span class="text-counter-separator"></span>
+              <span class="text-counter-max">120</span>
+            </span>
+          </div>
+        </li>
+        <li class="form-item">
+
+          <div class="buttons-list">
+            <button id="generate-domains-button" type="button" class="button u-margin-inline-end-16"
+              onclick="getDomains()">
+              <span class="text">Generate Domains</span>
+            </button>
+
+            <button type="button" class="button is-secondary">
+              <span class="text">Share</span>
+            </button>
+          </div>
+
+        </li>
+      </ul>
+    </form>
+
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; width: 100%;" class="u-margin-inline-end-24">
+
+    <div class="loader u-margin-block-start-24" id="loading-icon" style="display: none;"></div>
+
+    <div id="results-holder" style="display: flex; flex-direction: column; align-items: center; width: 100%;"
+      class="u-margin-32">
+
+    </div>
+
+
+    <div id="particles-js" style="position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: -1;"></div>
+
+  </div>
+
+  <p style="position: fixed; bottom: 1rem;">Built with <a class="link" href="https://pink.appwrite.io/">Pink</a> • Made
+    with ❤️ • <a class="link" href="https://github.com/BadgerHobbs/">GitHub</a> • <a class="link"
+      href="https://www.buymeacoffee.com/">Buy Me a
+      Coffee</a>
+  </p>
+
+  <script src="/static/js/particles.js"></script>
+
+  <script>
+
+    particlesJS.load("particles-js", "/static/json/particlesjs-config.json", function ()
+    {
+      console.log("callback - particles.js config loaded");
+    });
+  </script>
+
+  <script>
+    const generateButton = document.getElementById("generate-domains-button");
+    const promptTextArea = document.getElementById("prompt-text-area");
+    const promptTextCount = document.getElementById("prompt-text-counter");
+    const maxPromptLength = 120;
+
+    generateButton.disabled = !(promptTextArea.value.length > 0);
+
+    promptTextArea.addEventListener("input", function ()
+    {
+      generateButton.disabled = !(promptTextArea.value.length > 0);
+
+      if (promptTextArea.value.length > maxPromptLength)
+      {
+        promptTextArea.value = promptTextArea.value.substring(0, maxPromptLength);
+      }
+
+      promptTextCount.innerHTML = promptTextArea.value.length;
+    });
+
+    const resultsHolder = document.getElementById("results-holder");
+    const loadingIcon = document.getElementById("loading-icon");
+
+    async function getDomains()
+    {
+      if (promptTextArea.value.trim().length == 0 || promptTextArea.value.trim().length > maxPromptLength)
+      {
+        return
+      }
+
+      loadingIcon.style.display = "";
+      resultsHolder.innerHTML = "";
+      let response = await fetch(`/api/domains?prompt=${ promptTextArea.value }`);
+      resultsHolder.innerHTML = await response.text();
+      loadingIcon.style.display = "none";
+    }
+
+    async function checkAvailability(element, domain)
+    {
+      element.style.display = "none";
+      document.getElementById(`domain-loader-${ domain }`).style.display = "";
+
+
+      if (document.getElementById(`domain-status-${ domain }`) !== null)
+      {
+        document.getElementById(`domain-status-${ domain }`).remove();
+      }
+      let response = await fetch(`/api/availability?domain=${ domain }`);
+      document.getElementById(`domain-result-${ domain }`).innerHTML += await response.text();
+      document.getElementById(`domain-loader-${ domain }`).style.display = "none";
+    }
+
+    // Define an array of text to animate
+    const textArr = [
+      "A 24-hour support hotline for people who just can't seem to get their stuff together.",
+      "A theme park entirely dedicated to mime performances.",
+      "A reality show where people live like it's the Middle Ages for a month.",
+      "A subscription service that sends you a new random hobby every month.",
+      "A concierge service for all your conspiracy theory needs.",
+      "A gym that only offers workouts inspired by infomercials.",
+      "A hot air balloon tour company that takes you on scenic rides to random locations.",
+      "A restaurant that serves meals based on dreams you had the night before.",
+      "A detective agency that only solves mysteries from old TV shows.",
+      "A travel agency that specializes in 'disaster tourism' and takes you to locations that have been hit by natural disasters.",
+      "A mobile app that creates personalised playlists based on your daily mood.",
+      "A store that only sells items that have been returned by people who received them as gifts.",
+      "A theme park where all the rides are based on common nightmares.",
+      "A phone service that connects you with a random stranger every time you make a call.",
+      "A comedy club that only features stand-up acts performed by dogs.",
+      "A delivery service that brings you a different type of food every time, chosen by a random generator.",
+      "A service that sends professional cuddlers to your home for a fee.",
+      "A virtual reality experience where you get to live as a superhero for a day.",
+      "A museum that showcases the world's worst inventions.",
+      "A tour company that takes you on a journey through abandoned and haunted locations.",
+    ];
+
+    promptTextArea.placeholder = textArr[(Math.random() * textArr.length) | 0];
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+<div id="domain-status-{{ domain }}.com" style="display: inline-flex; width: 100%;" class="u-margin-inline-start-4 u-margin-block-start-8">
+    {% for extension in domain_extensions %}
+        {% set domain_availible = is_domain_available(domain ~ extension) %}
+        {% set css_class = "is-complete" if domain_availible else "is-failed" %}
+
+        <button type="button" class="tooltip is-text status {{ css_class }} u-margin-inline-end-16 fade-in" style="animation: fadeIn {{ loop.index * 0.5 }}s;">
+            <span class="status-icon"></span>
+            <a class="text" href="http://{{ domain }}{{ extension }}">{{ extension }}</a>
+            <span class="tooltip-popup is-bottom" role="tooltip">
+                {{ domain }}{{ extension }}
+            </span>
+        </button>
+    {% endfor %}
+</div>

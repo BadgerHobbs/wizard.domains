@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "wizard-domains"
+version = "0.1.0"
+description = ""
+authors = ["BadgerHobbs <andyjriggs@gmail.com>"]
+readme = "README.md"
+packages = [{include = "program"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.89.1"
+openai = "^0.26.4"
+gunicorn = "^20.1.0"
+uvicorn = "^0.20.0"
+typer = {extras = ["all"], version = "^0.7.0"}
+jinja2 = "^3.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

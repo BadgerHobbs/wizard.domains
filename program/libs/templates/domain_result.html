@@ -1,0 +1,22 @@
+{% for domain in generated_domains %}
+<div id="domain-result-{{ domain }}"
+    style="display: flex; flex-direction: column; width: 100%; animation: fadeIn {{ loop.index * 0.5 }}s;"
+    class="{{ 'u-margin-block-start-12' if loop.index > 1}} fade-in">
+
+    <div style="display: flex; width: 100%;">
+        <div class="tag" style="flex-grow: 1;">
+            <span class="text" style="user-select: text;">{{ domain }}</span>
+        </div>
+        <button class="is-text tag u-margin-inline-start-16" onclick="checkAvailability(this, '{{ domain }}')">
+            <span class="icon-question-mark-circle" aria-hidden="true"></span>
+            <span class="text">check availability</span>
+        </button>
+        <div id="domain-loader-{{ domain }}" class="is-text tag is-success u-margin-inline-start-16"
+            style="display: none;">
+            <span class="icon-search-circle" aria-hidden="true"></span>
+            <span class="text">checking</span>
+        </div>
+    </div>
+
+</div>
+{% endfor %}
