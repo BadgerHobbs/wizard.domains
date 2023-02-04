@@ -1,5 +1,5 @@
 # Wizard Domains
-An example AI domain name gGenerator powered by GPT-3
+An example AI domain name generator powered by GPT-3
 
 ![Animation](https://user-images.githubusercontent.com/23462440/216789372-837b7564-55b8-42d2-bbed-24ae44dd49b4.gif)
 
