@@ -16,10 +16,10 @@ An example AI Domain Name Generator Powered by GPT-3.
 Note: Though you can use pip, it is reccomended to use [Poetry](https://python-poetry.org/docs/) to install and manage the required Python packages.
 
 ```bash
-poetry run program/main.py --help
+poetry run python program/main.py --help
 ```
 ```bash
-poetry run program/main.py --uvicorn --open-api-key="XXX"
+poetry run python program/main.py --uvicorn --openai-api-key="XXX"
 ```
 
 ## Docker
